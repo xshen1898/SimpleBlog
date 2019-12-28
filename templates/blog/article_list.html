@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load blog_tags %}
+{% block content %}
+{% if archive_type and archive_name %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-info">{{ archive_type }}：{{ archive_name }}</div>
+    </div>
+</div>
+{% endif %}
+{% for article in article_list %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="widget">
+            {% load_article_info article True %}   
+        </div>
+    </div>
+</div>
+{% endfor %}
+<div class="row">
+    <div class="col-md-12 text-center">
+        {% load_pagination paginator page_obj is_paginated False None %}
+    </div>
+</div>
+{% endblock %}

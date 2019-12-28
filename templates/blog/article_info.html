@@ -1,0 +1,48 @@
+{% load blog_tags %}
+<div class="row">
+    <div class="col-md-12 text-center">
+        {% if is_index %}
+            <a href="{{ article.get_absolute_url }}"><h4>{{ article.title }}</h4></a>
+        {% else %}
+            <h4>{{ article.title }}</h4>
+        {% endif %}
+    </div>
+</div>
+<div class="row" style="padding-top: 20px;padding-bottom: 20px;">
+    <div class="col-md-6 text-left">
+        <p class="blog-btn"><span class="glyphicon glyphicon-comment"></span> <del>发表评论</del></p>
+    </div>
+    <div class="col-md-6 text-right">
+        <p class="blog-tag"><span class="glyphicon glyphicon-eye-open"></span> {{ article.views }}</p>
+    </div>
+</div>
+{% if is_index %}
+    <div class="row">
+        <div class="col-md-12" style="line-height: 25px;">
+            <div>{{ article.content|markdown_content|truncatechars_html:200 }}</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <a class="blog-btn" href="{{ article.get_absolute_url }}">阅读全文</a>
+        </div>
+    </div> 
+{% else %} 
+<div class="row">
+    <div class="col-md-12" style="line-height: 25px;">
+        <div>{{ article.content|markdown_content }}</div>
+    </div>
+</div>
+{% endif %}
+<div class="row" style="padding-top: 20px;padding-bottom: 20px;">
+    <div class="col-md-12">
+        本条目发布于 <span class="glyphicon glyphicon-calendar"></span> {{ article.publish_date | date:'Y年m月d日' }}。属于
+        <a class="blog-tag" href="{{ article.category.get_absolute_url }}">
+            <span class="glyphicon glyphicon-folder-open"></span>&nbsp; {{ article.category }}
+        </a>分类，被贴了
+        {% for tag in article.tags.all %}
+            <a class="blog-tag" href="{{ tag.get_absolute_url }}"><span class="glyphicon glyphicon-tag"></span> {{ tag.name }}</a>
+        {% endfor %} 
+        标签。
+    </div>
+</div>

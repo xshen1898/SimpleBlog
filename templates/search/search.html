@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load blog_tags %}
+{% block content %}
+{% if query %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-info">搜索：{{ query }}</div>
+    </div>
+</div>
+{% endif %}
+{% if query and page.object_list %}
+    {% for article in page.object_list %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget">
+                    {% load_article_info article.object True %}   
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-md-12 text-center">
+            {% if page.has_previous or page.has_next %}
+                {% load_pagination paginator page True True query %}
+            {% else %}
+                {% load_pagination paginator page False True query %}
+            {% endif %}
+        </div>
+    </div>    
+{% else %}
+    没有找到相关文章！
+{% endif %}
+{% endblock %}

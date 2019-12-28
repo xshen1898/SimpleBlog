@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load blog_tags %}
+{% block header %}
+    <meta name="description" content="{{ article.title }}">
+    <meta name="keywords" content="{{ article.tags.all|join:',' }}">
+    <title>{{ article.title }}</title>
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="widget">
+            {% load_article_info article False %} 
+        </div>
+    </div>
+</div>
+<div class="row">
+        <div class="col-md-12 text-center">
+            <nav aria-label="...">
+                <ul class="pager">
+                    {% if prev_article %}
+                        <li class="previous"><a href="{{ prev_article.get_absolute_url }}"><span aria-hidden="true">&larr;</span> {{ prev_article.title }}</a></li>
+                    {% endif %}
+                    {% if next_article %}
+                        <li class="next"><a href="{{ next_article.get_absolute_url }}">{{ next_article.title }} <span aria-hidden="true">&rarr;</span></a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
+{% block articlemenu %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="widget">
+            <div class="widget-title">
+                <span>目录</span>
+            </div>
+            <div class="widget-body">
+                {{ article.content|markdown_toc }}
+            </div>   
+        </div>
+    </div>
+</div>
+{% endblock %}

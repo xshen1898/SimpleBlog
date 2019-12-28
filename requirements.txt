@@ -1,0 +1,8 @@
+django
+gunicorn
+mysqlclient
+markdown
+django-uuslug
+django-haystack
+whoosh
+jieba

@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+    expose:
+      - 3306
+    volumes:
+      - /usr/src/app/mysql/data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+  simpleblog:
+    image: simpleblog:1.0
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    container_name: simpleblog
+    restart: always
+    expose:
+      - 8000
+    depends_on:
+      - mysql
+    links:
+      - mysql
+  nginx:
+    image: nginx
+    container_name: nginx
+    restart: always
+    volumes:
+      - /usr/src/app/SimpleBlog/docker/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+      - /usr/src/app/log/nginx:/var/log/nginx
+      - /usr/src/app/SimpleBlog/static:/usr/share/nginx/html/static
+    ports:
+      - 80:80
+    depends_on:
+      - simpleblog
+    links:
+      - simpleblog

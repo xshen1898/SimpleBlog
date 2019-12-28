@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">   
+        <div class="widget">
+            <div class="widget-title">
+                <span>文章归档</span>
+            </div>
+            <div class="widget-body">
+                {% regroup article_list by publish_date.year as article_year_list %}
+                <ul>
+                    {% for article_year in article_year_list %}
+                        <li>{{ article_year.grouper }} 年
+                            {% regroup article_year.list by publish_date.month as article_month_list %}
+                            <ul>
+                                {% for article_month in article_month_list %}
+                                    <li>{{ article_month.grouper }} 月 ({{ article_month.list | length }})
+                                        <ul>
+                                            {% for article in article_month.list %}
+                                                <li><a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -17,6 +17,7 @@
     <link type="text/css" rel="stylesheet" href="{% static 'css/fonts.css' %}" />
     <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
     <link type="text/css" rel="stylesheet" href="{% static 'css/blog.css' %}" />
+    <link type="text/css" rel="stylesheet" href="{% static 'css/comment.css' %}" />
     {% block specificcss %}
     {% endblock %}
 </head>
@@ -41,7 +42,7 @@
             <div id="bs-docs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="/">关于</a></li>
-                    <li><a href="{% url 'archive' %}">归档</a></li>
+                    <li><a href="{% url 'blog:archive' %}">归档</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
@@ -55,12 +56,13 @@
                     {% if user.username %}
                         <li>
                             <div class="uavatar">
-                                <img src="#"></img>
+                                <img src="{{ user.oauthuser.profile_image_url }}"></img>
                             </div>
                         </li>
-                        <li><a href="#">退出</a></li>
+                        <li><p class="navbar-text">{{ user.oauthuser.nickname }}</p></li>
+                        <li><a href="{% url 'oauth:oauth_logout' %}">退出</a></li>
                     {% else %}
-                        <li><a href="#"><del>登录</del></a></li>
+                        <li><a href="{% url 'oauth:oauth_login' %}?next_url={{ request.get_full_path }}">登录</a></li>
                     {% endif %}
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -119,6 +121,7 @@
     <script src="{% static 'js/jquery-1.12.4.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/blog.js' %}"></script>
+    <script src="{% static 'js/comment.js' %}"></script>
     {% block specificjs %}
     {% endblock %}
 </body>

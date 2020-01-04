@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load blog_tags %}
+{% load comment_tags %}
 {% block header %}
     <meta name="description" content="{{ article.title }}">
     <meta name="keywords" content="{{ article.tags.all|join:',' }}">
@@ -27,6 +28,20 @@
             </nav>
         </div>
     </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="comment-main">
+            <div class="widget">
+                <div class="widget-title">
+                    <span>评论 ({{ article.comment_set.all.count }})</span>
+                </div>
+                <div class="widget-body">
+                    {% load_comment article user %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 {% block articlemenu %}
 <div class="row">

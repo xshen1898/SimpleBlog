@@ -38,7 +38,7 @@ body {
 }
 .widget-title span {
     border-bottom: 2px solid #29afec;
-    padding-bottom: 8px;
+    padding-bottom: 9px;
     padding-right: 30px;
     font-weight: 600;
 }
@@ -112,4 +112,7 @@ input.search {
     background-color: #ddd;
     border: 1px solid #ddd;
     border-radius: 15px;
+}
+.comment-main {
+    margin-bottom: 50px;
 }

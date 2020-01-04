@@ -25,7 +25,7 @@ SECRET_KEY = 'b%*f)q%w@g%qr3ik^ouyouy(g+!nq+nptpk530c^ck!+=sri7_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'haystack',
+    'oauth.apps.OauthConfig',
+    'comment.apps.CommentConfig',
     'blog.apps.BlogConfig',
 ]
 
@@ -67,6 +69,7 @@ TEMPLATES = [
             ],
             'libraries': {
                 "blog_tags": "blog.templatetags.blog_tags",
+                "comment_tags": "comment.templatetags.comment_tags",
             },
         },
     },
@@ -83,7 +86,7 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'simplesurvey',
+        'NAME': 'simpleblog',
         'USER': 'root',
         'PASSWORD': '123456',
         'HOST': 'mysql',
@@ -145,3 +148,11 @@ HAYSTACK_CONNECTIONS = {
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 5
 
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+
+# oauth-weibo
+
+WEIBO_APP_KEY = '1234567890'
+WEIBO_APP_SECRET = 'abcd1234567890'
+WEIBO_REDIRECT_URI = 'https://www.mywebsite.com/oauth/authorize'
+

@@ -1,0 +1,109 @@
+{% load static %}
+{% load comment_tags %}
+<div class="comment-list">
+    <div class="media-list">
+        {% for comment in article.comment_set.all %}
+            <div class="media" id="comment_{{ comment.pk }}">
+                <div class="media-left">
+                    <div class="comment-avatar">
+                        <img src="{{ comment.user.oauthuser.profile_image_url }}">
+                    </div>
+                </div>
+                <div class="media-body">
+                    <h5 class="media-heading">
+                        <a href="javascript:void(0);">{{ comment.user.oauthuser.nickname }}</a>
+                    </h5>
+                    <div>{{ comment.content }}</div>
+                    <div class="comment-reply" id="comment_reply_{{ comment.pk }}">
+                        <small>{{ comment.create_date | date:'Y年m月d日 H:i:s' }}</small>
+                        <strong>&middot;</strong> 
+                        {% if user.username %}
+                            <a href="javascript:void(0);" class="reply-btn" onclick="do_reply('{{ comment.pk }}', '{{ comment.user.pk }}', '{{ comment.user.oauthuser.nickname }}', '-1');">
+                        {% else %}
+                            <a href="{{ request.get_full_path }}#comment_form" class="reply-btn">
+                        {% endif %}
+                        <small>回复</small></a>
+                    </div>
+                    <div class="comment-list">
+                        <div class="media-list">
+                            {% for discussion in comment.discussion_set.all %}
+                                <div class="media" id="discussion_{{ discussion.pk }}">
+                                    <div class="media-left">
+                                        <div class="comment-avatar">
+                                            <img src="{{ discussion.user.oauthuser.profile_image_url }}">
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <h5 class="media-heading">
+                                            {% if discussion.user != discussion.to_user %}
+                                                <a href="javascript:void(0);">{{ discussion.user.oauthuser.nickname }}</a>
+                                                <strong>回复</strong>
+                                                <a href="javascript:void(0);">{{ discussion.to_user.oauthuser.nickname }}</a>
+                                                <strong>:</strong>
+                                            {% else %}
+                                                <a href="javascript:void(0);">{{ discussion.user.oauthuser.nickname }}</a>
+                                            {% endif %}
+                                        </h5>
+                                        <div>{{ discussion.content }}</div>
+                                        <div class="comment-reply" id="discussion_reply_{{ discussion.pk }}">
+                                            <small>{{ discussion.create_date | date:'Y年m月d日 H:i:s' }}</small>
+                                            <strong>&middot;</strong>
+                                            {% if user.username %}
+                                                <a href="javascript:void(0);" class="reply-btn" onclick="do_reply('{{ comment.pk }}', '{{ discussion.user.pk }}', '{{ discussion.user.oauthuser.nickname }}', '{{ discussion.pk }}');">
+                                            {% else %}
+                                                <a href="{{ request.get_full_path }}#comment_form" class="reply-btn">
+                                            {% endif %}
+                                            <small>回复</small></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% if discussion != comment.discussion_set.all.last %}
+                                    <hr class="comment-divider">
+                                {% endif %}
+                            {% endfor %}    
+                        </div>
+                    </div>    
+                </div>
+            </div>
+            {% if comment != article.comment_set.all.last %}
+                <hr class="comment-divider">
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+<div class="comment-form" id="comment_form">
+    {% if user.username %}
+        <h4>发表评论</h4>
+        <form class="form-comment" action="{% url 'comment:create_comment' article.pk %}" method="post">
+            {% csrf_token %}   
+            <div class="form-group">
+                <textarea class="form-control" name="comment" rows="5" placeholder="写下你到评论..." required="required"></textarea>
+            </div>
+            <button type="submit" class="blog-btn">发表评论</button>
+        </form>
+    {% else %}
+        <h4>您还没有登录，请您登录后发表评论。</h4>
+        <p>
+            快捷登录: 
+            <a href="{% url 'oauth:oauth_login' %}?next_url={{ article.get_absolute_url }}">
+                <img src="{% static 'images/weibo.png' %}"></img>
+            </a>
+        </p>
+    {% endif %}
+</div>
+<div class="reply-form" id="reply_form">
+    <form action="{% url 'comment:create_discussion' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="hidden" class="form-control" name="comment_id" id="comment_id">
+        </div>
+        <div class="form-group">
+            <input type="hidden" class="form-control" name="to_user_id" id="to_user_id">
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" name="comment" rows="5" required="required" id="reply_content"></textarea>
+        </div>
+        <a class="blog-btn" href="javascript:void(0);" onclick="cancel_reply();">取消</a>
+        <button type="submit" class="blog-btn">回复</button>
+    </form>
+</div>

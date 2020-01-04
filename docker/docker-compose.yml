@@ -25,15 +25,20 @@ services:
     links:
       - mysql
   nginx:
-    image: nginx
+    image: certbot/nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
     container_name: nginx
     restart: always
     volumes:
       - /usr/src/app/SimpleBlog/docker/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+      - /usr/src/app/cert/letsencrypt:/etc/letsencrypt
       - /usr/src/app/log/nginx:/var/log/nginx
       - /usr/src/app/SimpleBlog/static:/usr/share/nginx/html/static
     ports:
       - 80:80
+      - 443:443
     depends_on:
       - simpleblog
     links:

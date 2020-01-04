@@ -20,6 +20,8 @@ from haystack.views import SearchView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('oauth/', include('oauth.urls')),
     path('', include('blog.urls')),
     path('search/', SearchView(), name='haystack_search'),
+    path('comment/', include('comment.urls')),
 ]

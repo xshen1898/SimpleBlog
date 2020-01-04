@@ -10,7 +10,7 @@
 </div>
 <div class="row" style="padding-top: 20px;padding-bottom: 20px;">
     <div class="col-md-6 text-left">
-        <p class="blog-btn"><span class="glyphicon glyphicon-comment"></span> <del>发表评论</del></p>
+        <a class="blog-btn" href="{{ article.get_absolute_url }}#comment_form"><span class="glyphicon glyphicon-comment"></span> 发表评论</a>
     </div>
     <div class="col-md-6 text-right">
         <p class="blog-tag"><span class="glyphicon glyphicon-eye-open"></span> {{ article.views }}</p>

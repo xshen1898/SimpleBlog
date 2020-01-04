@@ -13,7 +13,7 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('category', kwargs={'slug': self.slug})
+        return reverse('blog:category', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -28,7 +28,7 @@ class Tag(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('tag', kwargs={'slug': self.slug})
+        return reverse('blog:tag', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -52,7 +52,7 @@ class Article(models.Model):
         ordering = ['-publish_date']
 
     def get_absolute_url(self):
-        return reverse('article', kwargs={'slug': self.slug})
+        return reverse('blog:article', kwargs={'slug': self.slug})
 
     def increase_views(self):
         self.views += 1

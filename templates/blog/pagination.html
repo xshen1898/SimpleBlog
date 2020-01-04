@@ -2,14 +2,14 @@
 <nav aria-label="Page navigation">
     <ul class="pagination">
         {% if not is_paginated %}
-            <li class="disabled"><a href="#"><span aria-hidden="true">&laquo;</span></a></a></li>
-            <li class="active"><a href="#">1</a></li>
-            <li class="disabled"><a href="#"><span aria-hidden="true">&raquo;</span></a></li>
+            <li class="disabled"><a href="javascript:void(0);"><span aria-hidden="true">&laquo;</span></a></a></li>
+            <li class="active"><a href="javascript:void(0);">1</a></li>
+            <li class="disabled"><a href="javascript:void(0);"><span aria-hidden="true">&raquo;</span></a></li>
         {% else %}
             {% if page_obj.has_previous %}
                 <li><a href="{{ page_href }}={{ page_obj.previous_page_number }}"><span aria-hidden="true">&lsaquo;</span></a></li>
             {% else %}
-                <li class="disabled"><a href="#"><span aria-hidden="true">&lsaquo;</span></a></a></li>
+                <li class="disabled"><a href="javascript:void(0);"><span aria-hidden="true">&lsaquo;</span></a></a></li>
             {% endif %}
             {% if first %}
                 <li><a href="{{ page_href }}=1">1</a></li>
@@ -37,7 +37,7 @@
             {% if page_obj.has_next %}
                 <li><a href="{{ page_href }}={{ page_obj.next_page_number }}"><span aria-hidden="true">&rsaquo;</span></a></li>
             {% else %}
-                <li class="disabled"><a href="#"><span aria-hidden="true">&rsaquo;</span></a></li>
+                <li class="disabled"><a href="javascript:void(0);"><span aria-hidden="true">&rsaquo;</span></a></li>
             {% endif %}
         {% endif %}
     </ul>

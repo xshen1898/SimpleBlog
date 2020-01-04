@@ -6,7 +6,7 @@ from django.conf import settings
 from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 
-from .oauth_weibo import OAuthWeibo, OAuthAccessTokenException
+from .oauth_weibo import OAuthWeibo, OAuthAccessTokenException, OAuthUserInfoException
 from .models import OAuthUser
 
 
@@ -36,7 +36,10 @@ def authorize(request):
     if user is not None:
         login(request, user)
     else:
-        owb_user = owb.get_user_info(token)
+        try:
+            owb_user = owb.get_user_info(token)
+        except OAuthUserInfoException as e:
+            return HttpResponseRedirect('/')
         new_user = User(username=owb_user['id'])
         pwd = str(uuid.uuid1())
         new_user.set_password(pwd)

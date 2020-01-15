@@ -1,5 +1,5 @@
 # SimpleBlog
-使用Django, Bootstrap, jQuery等语言和库编写的一个简单的博客。支持OAuth微博账号登陆评论。
+使用Django, Bootstrap, jQuery等语言和库编写的一个简单的博客，支持OAuth微博账号登陆评论。使用docker-compose部署。
 
 ### Demo
 

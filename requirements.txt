@@ -6,4 +6,4 @@ django-uuslug==1.2.0
 django-haystack==2.8.1
 whoosh==2.7.4
 jieba==0.40
-requests==2.22.0
+requests==2.31.0
